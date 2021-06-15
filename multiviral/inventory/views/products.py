@@ -1,7 +1,4 @@
 
-
-
-
 # Django REST Framework 
 from rest_framework.viewsets import ModelViewSet
 
