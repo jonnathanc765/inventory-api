@@ -40,11 +40,12 @@ DJANGO_APPS = [
 ]
 
 LOCAL_APPS = [
-  'multiviral.inventory'
+  'multiviral.inventory',
+  'multiviral.api'
 ]
 
 THIRD_PARTY_APPS = [
-  
+  'django_extensions'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
