@@ -57,12 +57,12 @@ class ProductModuleTest(TestCase):
     product = ProductFactory.create()
     
     update_body = {
-      'name': 'product name',
-      'description': 'product description',
-      'sell_price': 20,
-      'cost_price': 15,
-      'stock': 20,
-      'sku': '123'
+      'name': "product name",
+      'description': "product description",
+      'sell_price': "20",
+      'cost_price': "15",
+      'stock': "20",
+      'sku': "123"
     }
     
     response = self.client.put(f"/api/inventory/products/{product.pk}/", update_body, content_type='application/json')
