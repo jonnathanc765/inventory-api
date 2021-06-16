@@ -1,3 +1,11 @@
-from django.contrib import admin
+# Django 
+from django.contrib import admin 
 
-# Register your models here.
+# Models 
+from multiviral.inventory.models import Product
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    
+    list_display = ('name', 'stock', 'cost_price', 'sell_price')
+    
