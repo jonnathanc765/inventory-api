@@ -48,7 +48,8 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
   'multiviral.inventory',
-  'multiviral.api'
+  'multiviral.invoice',
+  'multiviral.api',
 ]
 
 THIRD_PARTY_APPS = [
