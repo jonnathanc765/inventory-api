@@ -1,5 +1,6 @@
 
 # Django
+from multiviral.inventory.models.histories import InventoryHistory
 from django.test import TestCase
 
 # Django REST Framework
@@ -76,3 +77,25 @@ class ProductModuleTest(TestCase):
     self.assertEqual(str(product.cost_price), response.data['cost_price'])
     self.assertEqual(product.sku, response.data['sku'])
     self.assertEqual(product.stock, response.data['stock'])
+    
+  def test_histories_was_registered_when_product_are_created(self):
+    
+    response = self.client.post('/api/inventory/products/', {
+      'name': 'product name',
+      'description': 'product description',
+      'sell_price': 20,
+      'cost_price': 15,
+      'stock': 20,
+      'sku': '123'
+    })
+    
+    self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    self.assertEqual(Product.objects.count(), 1)
+    self.assertEqual(InventoryHistory.objects.count(), 1)
+    history = InventoryHistory.objects.first()
+    self.assertEqual(history.product.name, 'product name')
+    self.assertEqual(history.stock, 20)
+    self.assertEqual(history.type, 'NEW')
+    self.assertEqual(history.old_price, None)
+    self.assertEqual(history.new_price, 15)
+    

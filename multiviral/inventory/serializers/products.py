@@ -14,3 +14,17 @@ class ProductModelSerializer(serializers.ModelSerializer):
     
     model = Product 
     fields = '__all__'
+    
+    
+  def create(self, validated_data):
+    
+    product = Product.objects.create(**validated_data)
+    
+    product.inventory_histories.create(
+      stock=validated_data['stock'],
+      new_price=validated_data['cost_price'],
+      type='NEW',
+      comment='Product created'
+    )
+    
+    return product

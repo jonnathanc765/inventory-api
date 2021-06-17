@@ -21,14 +21,15 @@ class InventoryHistory(BaseModel):
     Product,
     on_delete=models.SET_NULL,
     null=True,
-    blank=False
+    blank=False,
+    related_name='inventory_histories'
   )
   type = models.CharField(max_length=3, choices=INVENTORY_HISTORIES_TYPES, default=DEFAULT_INVENTORY_HISTORIES_TYPE)
-  origin = models.CharField(max_length=255)
-  old_price = models.DecimalField(decimal_places=2, max_digits=10)
+  origin = models.CharField(max_length=255, null=True, blank=True)
+  old_price = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
   new_price = models.DecimalField(decimal_places=2, max_digits=10)
   stock = models.PositiveIntegerField(blank=False)
-  comments = models.CharField(max_length=255, null=True)
+  comment = models.CharField(max_length=255, null=True)
   
   class Meta(BaseModel.Meta):
     verbose_name_plural = 'Inventory histories'
