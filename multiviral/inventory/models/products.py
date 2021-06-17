@@ -6,7 +6,7 @@ from multiviral.utils.models import BaseModel
 from django.db import models
 
 
-class Product(BaseModel, models.Model):
+class Product(BaseModel):
     
     sku = models.CharField(max_length=255, null=True, blank=True)
     name = models.CharField(max_length=255)
