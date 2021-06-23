@@ -2,7 +2,7 @@
 # Django  
 from django.contrib import admin
 
-from multiviral.invoice.models import Invoice, InvoiceDetail
+from multiviral.sales.models import Invoice, InvoiceDetail
 
 
 @admin.register(Invoice)
