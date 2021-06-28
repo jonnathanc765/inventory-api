@@ -13,7 +13,7 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(InventoryHistory)
 class InventoryHistoryAdmin(admin.ModelAdmin):
 
-  list_display = ('get_product_name', 'new_price', 'stock', 'created_at')
+  list_display = ('id', 'get_product_name', 'new_price', 'stock', 'created_at')
   
   def get_product_name(self, obj):
     if obj.product:
