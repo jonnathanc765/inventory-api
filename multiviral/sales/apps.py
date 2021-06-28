@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class InvoiceConfig(AppConfig):
+class SalesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'multiviral.invoice'
+    name = 'multiviral.sales'
