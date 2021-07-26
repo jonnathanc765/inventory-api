@@ -34,13 +34,14 @@ class Invoice(BaseModel):
 class InvoiceDetail(BaseModel):
   invoice = models.ForeignKey(
     Invoice,
-    on_delete=models.CASCADE
+    on_delete=models.CASCADE,
+    related_name='invoice_details'
   )
   product = models.ForeignKey(
     Product,
     on_delete=models.SET_NULL,
     null=True,
-    blank=False
+    blank=False,
   )
   quantity = models.PositiveBigIntegerField()
   product_price = models.DecimalField(max_digits=20, decimal_places=2)
