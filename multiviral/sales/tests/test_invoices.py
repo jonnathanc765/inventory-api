@@ -26,6 +26,7 @@ class InvoicesTest(TestCase):
     
     self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
     self.assertEqual(len(response.data), 1)
-    self.assertTrue('name' in response.data[0]['product'])
+    self.assertTrue(len(response.data[0]['invoice_details']), 5)
+    self.assertTrue('name' in response.data[0]['invoice_details'][0]['product'])
     self.assertEqual(len(response.data[0]['invoice_details']), 5)
     
