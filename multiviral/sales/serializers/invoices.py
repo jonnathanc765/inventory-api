@@ -32,8 +32,11 @@ class InvoiceModelSerializer(serializers.ModelSerializer):
     fields = '__all__'
     
   def get_fields(self, *args, **kwargs):
+    """
+      Removed validation for number after create
+    """
     fields = super(InvoiceModelSerializer, self).get_fields(*args, **kwargs)
     request = self.context.get('request', None)
     if request and getattr(request, 'method', None) in ['PUT', 'PATCH']:
-        fields['number'].required = False
+      fields['number'].required = False
     return fields
