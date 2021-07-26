@@ -20,8 +20,7 @@ class InvoicesTest(TestCase):
     
     invoice = InvoiceFactory.create()
     
-    for _ in range(0, 5):
-      InvoiceDetailFactory.create(invoice=invoice)
+    InvoiceDetailFactory.create_batch(5, invoice=invoice)
     
     response = self.client.get('/api/sales/invoices/')
     
