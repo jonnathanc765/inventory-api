@@ -30,3 +30,10 @@ class InvoiceModelSerializer(serializers.ModelSerializer):
   class Meta:
     model = Invoice
     fields = '__all__'
+    
+  def get_fields(self, *args, **kwargs):
+    fields = super(InvoiceModelSerializer, self).get_fields(*args, **kwargs)
+    request = self.context.get('request', None)
+    if request and getattr(request, 'method', None) in ['PUT', 'PATCH']:
+        fields['number'].required = False
+    return fields

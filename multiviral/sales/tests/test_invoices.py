@@ -74,5 +74,23 @@ class InvoicesTest(TestCase):
     self.assertEqual(Invoice.objects.count(), 1)
     self.assertEqual(Invoice.objects.first().owner_name, 'Client Name')
     
+  def test_users_can_update_rest_of_invoice(self):
     
+    invoice = InvoiceFactory.create()
     
+    response = self.client.put(f"/api/sales/invoices/{invoice.pk}/", {
+      'owner_name': 'Client Name',
+      'owner_identification': 'V-1234567',
+      'owner_address': 'Client address and his number house #123'
+    })
+    
+    # Response check
+    self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
+    self.assertEqual(response.data['owner_name'], 'Client Name')
+    self.assertEqual(response.data['owner_identification'], 'V-1234567')
+    self.assertEqual(response.data['owner_address'], 'Client address and his number house #123')
+    
+    # Database Check
+    self.assertEqual(Invoice.objects.first().owner_name, 'Client Name')
+    self.assertEqual(Invoice.objects.first().owner_identification, 'V-1234567')
+    self.assertEqual(Invoice.objects.first().owner_address, 'Client address and his number house #123')
