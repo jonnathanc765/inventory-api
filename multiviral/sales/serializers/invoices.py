@@ -31,6 +31,14 @@ class InvoiceModelSerializer(serializers.ModelSerializer):
     model = Invoice
     fields = '__all__'
     
+  def validate(self, data):
+    
+    if self.instance:
+      if self.instance.status in ['C', 'F']:
+        raise serializers.ValidationError({'status': 'No puedes cambiar el status de una factura cancelada o finalizada'})
+    
+    return data
+    
   def get_fields(self, *args, **kwargs):
     """
       Removed validation for number after create

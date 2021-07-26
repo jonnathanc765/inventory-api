@@ -71,6 +71,8 @@ class InvoicesTest(TestCase):
     
     self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.data)
     
+    self.assertEqual(response.data['status'], 'D')
+    
     self.assertEqual(Invoice.objects.count(), 1)
     self.assertEqual(Invoice.objects.first().owner_name, 'Client Name')
     
@@ -94,3 +96,27 @@ class InvoicesTest(TestCase):
     self.assertEqual(Invoice.objects.first().owner_name, 'Client Name')
     self.assertEqual(Invoice.objects.first().owner_identification, 'V-1234567')
     self.assertEqual(Invoice.objects.first().owner_address, 'Client address and his number house #123')
+    
+  def test_users_cannot_change_status_if_current_status_are_cancelled(self):
+    
+    invoice = InvoiceFactory.create(status='C')
+    
+    response = self.client.put(f"/api/sales/invoices/{invoice.pk}/", {
+      'owner_name': 'Client Name'
+    })
+    
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    self.assertTrue('status' in response.data, response.data)
+    self.assertEqual(Invoice.objects.first().status, 'C')
+    
+  def test_users_cannot_change_status_if_current_status_are_finished(self):
+    
+    invoice = InvoiceFactory.create(status='F')
+    
+    response = self.client.put(f"/api/sales/invoices/{invoice.pk}/", {
+      'owner_name': 'Client Name'
+    })
+    
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    self.assertTrue('status' in response.data, response.data)
+    self.assertEqual(Invoice.objects.first().status, 'F')
