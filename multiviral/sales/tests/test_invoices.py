@@ -10,6 +10,8 @@ from rest_framework import status
 from multiviral.sales.factories import InvoiceDetailFactory, InvoiceFactory
 from multiviral.inventory.factories import ProductFactory
 
+# Models 
+from multiviral.sales.models import Invoice
 class InvoicesTest(TestCase):
   
   def setUp(self):
@@ -59,6 +61,18 @@ class InvoicesTest(TestCase):
     self.assertEqual(response.data['invoice_details'][0]['product'], None)
     self.assertEqual(response.data['invoice_details'][0]['product_name'], product.name)
     self.assertEqual(response.data['invoice_details'][0]['product_price'], str(product.sell_price) + '.00')
+  
+  def test_users_can_create_new_invoices_with_draft_status(self):
+    
+    response = self.client.post('/api/sales/invoices/', {
+      'number': '34',
+      'owner_name': 'Client Name'
+    })
+    
+    self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.data)
+    
+    self.assertEqual(Invoice.objects.count(), 1)
+    self.assertEqual(Invoice.objects.first().owner_name, 'Client Name')
     
     
     

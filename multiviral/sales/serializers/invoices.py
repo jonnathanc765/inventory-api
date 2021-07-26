@@ -25,7 +25,7 @@ class InvoiceDetailModelSerializer(serializers.ModelSerializer):
     
 class InvoiceModelSerializer(serializers.ModelSerializer):
   
-  invoice_details = InvoiceDetailModelSerializer(many=True)
+  invoice_details = InvoiceDetailModelSerializer(many=True, read_only=True)
   
   class Meta:
     model = Invoice
