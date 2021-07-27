@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 import environ
-import django_heroku
 from pathlib import Path
 
 
@@ -143,16 +142,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
 
-
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 
-
 CORS_ORIGIN_ALLOW_ALL = True
-
-# For production
-django_heroku.settings(locals())
