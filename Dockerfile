@@ -16,10 +16,4 @@ RUN pip install -r /requirements/local.txt
 
 RUN apk del build-deps
 
-COPY ./entrypoint /entrypoint
-RUN sed -i 's/\r//' /entrypoint
-RUN chmod +x /entrypoint
-
 WORKDIR /app
-
-ENTRYPOINT ["/entrypoint"]
