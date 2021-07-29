@@ -21,9 +21,9 @@ EMAIL_PORT = 1025
 
 DATABASES['default'] = {
     'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('MYSQL_NAME', default='databasename'),
-        'USER': env('MYSQL_USER', default='databaseuser'),
-        'PASSWORD': env('MYSQL_PASSWORD', default='databasepassword'),
-        'HOST': env('MYSQL_HOST', default='localhost'),
-        'PORT': env('MYSQL_PORT', default=3306),
+    'NAME': env('MYSQL_NAME', default='databasename'),
+    'USER': env('MYSQL_USER', default='databaseuser'),
+    'PASSWORD': env('MYSQL_PASSWORD', default='databasepassword'),
+    'HOST': env('MYSQL_HOST', default='localhost'),
+    'PORT': env('MYSQL_PORT', default=3306),
 }
