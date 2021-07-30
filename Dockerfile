@@ -14,6 +14,12 @@ RUN apk update \
 COPY requirements/*.txt /requirements/
 RUN pip install -r /requirements/local.txt
 
+COPY ./entrypoint /entrypoint
+RUN sed -i 's/\r//' /entrypoint
+RUN chmod +x /entrypoint
+
 RUN apk del build-deps
 
 WORKDIR /app
+
+ENTRYPOINT ["/entrypoint"]

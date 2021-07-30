@@ -17,15 +17,15 @@ services:
       - ./.envs/.mysql
     ports:
       - "8000:8000"
-    command: python manage.py runserver 0.0.0.0:8000
+    command: /entrypoint
 
   mysql:
     image: mysql/mysql-server:5.6
     ports:
       - "3666:3306"
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: example
+    env_file:
+      - ./.envs/.mysql
     volumes:
       - local_mysql_data:/var/lib/mysql
   
