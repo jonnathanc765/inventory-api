@@ -9,19 +9,19 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import os
 import environ
-import django_heroku
-from pathlib import Path
 
 
-
+ROOT_DIR = environ.Path(__file__) - 3
+APPS_DIR = ROOT_DIR.path('cride')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Get envoriment 
 env = environ.Env()
+
+DEBUG = env.bool('DJANGO_DEBUG', False)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -30,13 +30,12 @@ env = environ.Env()
 SECRET_KEY = 'z-4eyn!+$pbh56p&8kf7i%$et31=_pv#-m&taz0h8ej9i_n5uc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
-
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,7 +52,6 @@ LOCAL_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-  'django_extensions',
   'rest_framework',
   'corsheaders',
 ]
@@ -95,12 +93,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': {}
 }
+DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 
 # Password validation
@@ -139,20 +142,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = str(ROOT_DIR('staticfiles'))
 
 STATIC_URL = '/static/'
 
-
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 
-
 CORS_ORIGIN_ALLOW_ALL = True
-
-# For production
-django_heroku.settings(locals())

@@ -120,3 +120,4 @@ class InvoicesTest(TestCase):
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
     self.assertTrue('status' in response.data, response.data)
     self.assertEqual(Invoice.objects.first().status, 'F')
+  
