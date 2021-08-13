@@ -2,6 +2,7 @@ version: '3'
 
 volumes:
   local_mysql_data: {}
+  local_aws_data: {}
 
 services:
   django: &django
@@ -28,6 +29,21 @@ services:
       - ./.envs/.mysql
     volumes:
       - local_mysql_data:/var/lib/mysql
+  
+  localstack:
+    image: localstack/localstack:0.12.16
+    container_name: 'aws_S3'
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - DEFAULT_REGION=eu-west-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+    ports:
+      - '4566'
+    volumes:
+      - 'local_aws_data:/docker-entrypoint-initaws.d'
+      - 'local_aws_data:/tmp/localstack'
   
 networks:
   default:
