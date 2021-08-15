@@ -1,10 +1,11 @@
 
+# Utils 
+from multiviral.core.utils.tests import CustomTestCase
+
 # Django
 from multiviral.inventory.models.histories import InventoryHistory
-from django.test import TestCase
 
 # Django REST Framework
-from rest_framework.test import APIClient
 from rest_framework import status
 
 # Factories 
@@ -15,17 +16,11 @@ from multiviral.inventory.models import Product
 
 
 
-class ProductModuleTest(TestCase):
-  
-  def setUp(self):
-    
-    client = APIClient()
-    
+class ProductModuleTest(CustomTestCase):
   
   def test_users_can_retrieve_all_products(self):
     
     ProductFactory.create_batch(20)
-    
     
     response = self.client.get('/api/inventory/products/')
     
@@ -35,7 +30,7 @@ class ProductModuleTest(TestCase):
   def test_users_can_create_products(self):
     
     response = self.client.post('/api/inventory/products/', {
-      'name': 'product name',
+      'name': "product name]",
       'description': 'product description',
       'sell_price': 20,
       'cost_price': 15,
@@ -58,15 +53,17 @@ class ProductModuleTest(TestCase):
     product = ProductFactory.create()
     
     update_body = {
-      'name': "product name",
-      'description': "product description",
-      'sell_price': "20",
-      'cost_price': "15",
-      'stock': "20",
-      'sku': "123"
+      "name": "product name",
+      "description": "product description",
+      "sell_price": "20",
+      "cost_price": "15",
+      "stock": "20",
+      "sku": "123"
     }
-    
-    response = self.client.put(f"/api/inventory/products/{product.pk}/", update_body, content_type='application/json')
+    response = self.client.put(
+      f"/api/inventory/products/{product.pk}/", 
+      data=update_body, 
+    )
     
     self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
     self.assertEqual(Product.objects.count(), 1)

@@ -1,9 +1,8 @@
 
-# Django 
-from django.test import TestCase
+# Utils 
+from multiviral.core.utils.tests import CustomTestCase
 
 # Django REST Framework
-from rest_framework.test import APIClient
 from rest_framework import status
 
 # factories 
@@ -12,13 +11,8 @@ from multiviral.inventory.factories import ProductFactory
 
 # Models 
 from multiviral.sales.models import Invoice
-class InvoicesTest(TestCase):
+class InvoicesTest(CustomTestCase):
   
-  def setUp(self):
-    
-    self.client = APIClient()
-    
-    
   def test_users_can_generate_new_invoices_with_pending_status(self):
     
     invoice = InvoiceFactory.create()
