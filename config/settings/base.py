@@ -23,8 +23,8 @@ APPS_DIR = ROOT_DIR.path('multiviral')
 # Get envoriment 
 env = environ.Env()
 
-# DEBUG = env.bool('DJANGO_DEBUG', False)
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG', False)
+# DEBUG = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
