@@ -22,7 +22,6 @@ EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
 
 if DEBUG:
-
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': env('MYSQL_HOST', default='localhost'),
