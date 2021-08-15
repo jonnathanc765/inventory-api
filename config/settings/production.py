@@ -4,6 +4,7 @@ from .base import *
 import dj_database_url
 import django_heroku
 
+DEBUG = True
 
 django_heroku.settings(locals())
 
