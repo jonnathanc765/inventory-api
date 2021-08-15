@@ -30,7 +30,7 @@ class ProductModuleTest(TestCase):
     response = self.client.get('/api/inventory/products/')
     
     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    self.assertEqual(len(response.data), 20)
+    self.assertEqual(len(response.data['results']), 10)
     
   def test_users_can_create_products(self):
     

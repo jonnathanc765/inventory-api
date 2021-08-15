@@ -16,7 +16,7 @@ CACHES = {
 }
 
 # django-extensions
-# INSTALLED_APPS += ['django_extensions'] 
+INSTALLED_APPS += ['django_extensions'] 
 
 # Email
 EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
