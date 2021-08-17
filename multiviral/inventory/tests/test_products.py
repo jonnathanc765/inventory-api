@@ -16,6 +16,13 @@ from multiviral.inventory.models import Product
 
 
 
+# Django REST Framework
+from multiviral.api.factories.users import UserFactory
+from rest_framework.test import APIClient
+from rest_framework.authtoken.models import Token
+
+
+
 class ProductModuleTest(CustomTestCase):
   
   def test_users_can_retrieve_all_products(self):
@@ -28,6 +35,11 @@ class ProductModuleTest(CustomTestCase):
     self.assertEqual(len(response.data), 20)
     
   def test_users_can_create_products(self):
+    
+    self.client = APIClient()
+    self.user = UserFactory.create(username='mandarina')
+    self.token = Token.objects.create(user=self.user).key
+    self.client.credentials(HTTP_AUTHORIZATION='Token {}'.format(self.token))
     
     response = self.client.post('/api/inventory/products/', {
       'name': "product name]",
@@ -49,6 +61,11 @@ class ProductModuleTest(CustomTestCase):
     self.assertEqual(product.stock, response.data['stock'])
     
   def test_users_can_update_products(self):
+    
+    self.client = APIClient()
+    self.user = UserFactory.create(username='mandarina')
+    self.token = Token.objects.create(user=self.user).key
+    self.client.credentials(HTTP_AUTHORIZATION='Token {}'.format(self.token))
     
     product = ProductFactory.create()
     
@@ -76,6 +93,11 @@ class ProductModuleTest(CustomTestCase):
     self.assertEqual(product.stock, response.data['stock'])
     
   def test_histories_was_registered_when_product_are_created(self):
+    
+    self.client = APIClient()
+    self.user = UserFactory.create(username='mandarina')
+    self.token = Token.objects.create(user=self.user).key
+    self.client.credentials(HTTP_AUTHORIZATION='Token {}'.format(self.token))
     
     response = self.client.post('/api/inventory/products/', {
       'name': 'product name',

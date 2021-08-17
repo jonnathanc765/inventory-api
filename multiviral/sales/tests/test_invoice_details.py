@@ -3,10 +3,11 @@
 
 # Utils 
 from rest_framework import status
-from multiviral.inventory.factories.products import ProductFactory
-from multiviral.sales.factories.invoices import InvoiceFactory
 from multiviral.core.utils.tests import CustomTestCase
 
+# Factories 
+from multiviral.inventory.factories.products import ProductFactory
+from multiviral.sales.factories.invoices import InvoiceFactory
 
 class InvoiceDetailsTests(CustomTestCase):
   
