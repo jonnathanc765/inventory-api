@@ -22,10 +22,10 @@ class InvoicesTest(CustomTestCase):
     response = self.client.get('/api/sales/invoices/')
     
     self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
-    self.assertEqual(len(response.data), 1)
-    self.assertTrue(len(response.data[0]['invoice_details']), 5)
-    self.assertTrue('name' in response.data[0]['invoice_details'][0]['product'])
-    self.assertEqual(len(response.data[0]['invoice_details']), 5)
+    self.assertEqual(len(response.data['results']), 1)
+    self.assertTrue(len(response.data['results'][0]['invoice_details']), 5)
+    self.assertTrue('name' in response.data['results'][0]['invoice_details'][0]['product'])
+    self.assertEqual(len(response.data['results'][0]['invoice_details']), 5)
     
   def test_users_receive_404_code_if_invoices_does_not_exists(self):
     

@@ -11,7 +11,9 @@ class ProductAdmin(admin.ModelAdmin):
   list_display = ('id', 'get_owner', 'name', 'stock', 'cost_price', 'sell_price')
   
   def get_owner(self, obj):
-    return obj.owner.username
+    if hasattr(obj, 'owner'):
+      return obj.owner.username
+    return '----'
   
   def get_queryset(self, request):
     qs = super().get_queryset(request)

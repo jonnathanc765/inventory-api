@@ -17,14 +17,10 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-ROOT_DIR = environ.Path(__file__) - 3
-APPS_DIR = ROOT_DIR.path('multiviral')
-
 # Get envoriment 
 env = environ.Env()
 
-# DEBUG = env.bool('DJANGO_DEBUG', False)
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG', False)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -151,3 +147,8 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10
+}

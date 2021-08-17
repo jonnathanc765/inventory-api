@@ -1,9 +1,8 @@
 from .base import *
 from .base import env
 
-
-# Base
 DEBUG = True
+
 
 # Security
 SECRET_KEY = env('DJANGO_SECRET_KEY', default='PB3aGvTmCkzaLGRAxDc3aMayKTPTDd5usT8gw4pCmKOk5AlJjh12pTrnNgQyOHCH')
@@ -23,7 +22,6 @@ INSTALLED_APPS += ['django_extensions']
 EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
-
 
 DATABASES['default'] = {
     'ENGINE': 'django.db.backends.mysql',
