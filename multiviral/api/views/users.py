@@ -2,7 +2,7 @@
 """Users views."""
 
 # Django REST Framework
-from rest_framework import mixins, status, viewsets
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -59,4 +59,13 @@ class UserViewSet(
       'access_token': token
     }
     return Response(data, status=status.HTTP_200_OK)
+  
+  @action(detail=False, methods=['GET'])
+  def logout(self, request):
+    request.user.auth_token.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+  
+  @action(detail=False, methods=['GET'])
+  def me(self, request):
+    return Response(UserModelSerializer(request.user).data)
 

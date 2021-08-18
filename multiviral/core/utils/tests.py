@@ -22,5 +22,7 @@ class CustomTestCase(TestCase):
   def authenticate(self):
     # Auth
     self.user = UserFactory.create(username='mandarina')
+    self.user.set_password('password')
+    self.user.save()
     self.token = Token.objects.create(user=self.user).key
     self.client.credentials(HTTP_AUTHORIZATION='Token {}'.format(self.token))

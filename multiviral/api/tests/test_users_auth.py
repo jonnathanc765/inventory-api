@@ -33,4 +33,28 @@ class AuthTest(CustomTestCase):
     self.assertTrue('username' in response.data['user'])
     self.assertEqual('mandarina', response.data['user']['username'])
     
+  def test_users_can_retrieve_his_informations(self):
+    
+    self.authenticate()
+    
+    response = self.client.get('/api/me/')
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+    self.assertEqual(response.data['username'], 'mandarina')
+    self.assertTrue('first_name' in response.data)
+    self.assertTrue('last_name' in response.data)
+    self.assertTrue('email' in response.data)
+    
+  def test_users_can_log_out(self):
+    
+    self.authenticate()
+    
+    response = self.client.get('/api/logout/')
+    
+    self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+    
+    response = self.client.get('/api/me/')
+    self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+    
+    
+    
     
