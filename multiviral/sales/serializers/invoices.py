@@ -4,25 +4,11 @@
 from rest_framework import serializers
 
 # Models 
-from multiviral.sales.models import InvoiceDetail, Invoice
+from multiviral.sales.models import Invoice
 
-# Serializers 
-from multiviral.inventory.serializers import ProductModelSerializer
-
-
-class InvoiceDetailModelSerializer(serializers.ModelSerializer):
-  
-  product = ProductModelSerializer()
-  
-  class Meta:
-    model = InvoiceDetail
-    fields = [
-      'product',
-      'quantity',
-      'product_name',
-      'product_price'
-    ]
-    
+from .invoice_details import (
+  InvoiceDetailModelSerializer
+)    
 class InvoiceModelSerializer(serializers.ModelSerializer):
   
   invoice_details = InvoiceDetailModelSerializer(many=True, read_only=True)

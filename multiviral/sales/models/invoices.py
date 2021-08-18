@@ -44,7 +44,7 @@ class InvoiceDetail(BaseModel):
     blank=False,
   )
   quantity = models.PositiveBigIntegerField()
-  product_price = models.DecimalField(max_digits=20, decimal_places=2)
+  product_price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
   product_name = models.CharField(max_length=255, null=True, blank=True)
   
   
