@@ -60,12 +60,14 @@ class ProductModuleTest(CustomTestCase):
     self.assertEqual(str(product.cost_price), response.data['cost_price'])
     self.assertEqual(product.sku, response.data['sku'])
     self.assertEqual(product.stock, response.data['stock'])
+    self.assertIsNotNone(product.owner)
+    self.assertEqual(product.owner.pk, self.user.pk)
     
   def test_users_can_update_products(self):
     
     self.authenticate()
     
-    product = ProductFactory.create()
+    product = ProductFactory.create(owner=self.user)
     
     update_body = {
       "name": "product name",
@@ -89,6 +91,8 @@ class ProductModuleTest(CustomTestCase):
     self.assertEqual(str(product.cost_price), response.data['cost_price'])
     self.assertEqual(product.sku, response.data['sku'])
     self.assertEqual(product.stock, response.data['stock'])
+    self.assertIsNotNone(product.owner)
+    self.assertEqual(product.owner.pk, self.user.pk)
     
   def test_just_loged_in_users_can_update_products(self):
     
