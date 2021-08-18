@@ -40,7 +40,7 @@ class UserViewSet(
     
     if self.action in ['login']:
       permissions = [AllowAny]
-    elif self.action in ['retrieve', 'update']:
+    elif self.action in ['retrieve', 'update', 'logout', 'me']:
       permissions = [IsAuthenticated, IsAccountOwner]
     else:
       permissions = [IsAuthenticated]
