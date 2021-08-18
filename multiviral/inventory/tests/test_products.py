@@ -25,6 +25,19 @@ class ProductModuleTest(CustomTestCase):
     self.assertEqual(response.status_code, status.HTTP_200_OK)
     self.assertEqual(len(response.data['results']), 10)
     
+  def test_just_loged_in_users_can_create_products(self):
+    
+    response = self.client.post('/api/inventory/products/', {
+      'name': "product name]",
+      'description': 'product description',
+      'sell_price': 20,
+      'cost_price': 15,
+      'stock': 20,
+      'sku': '123'
+    })
+    
+    self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+    
   def test_users_can_create_products(self):
     
     self.authenticate()
@@ -76,6 +89,25 @@ class ProductModuleTest(CustomTestCase):
     self.assertEqual(str(product.cost_price), response.data['cost_price'])
     self.assertEqual(product.sku, response.data['sku'])
     self.assertEqual(product.stock, response.data['stock'])
+    
+  def test_just_loged_in_users_can_update_products(self):
+    
+    product = ProductFactory.create()
+    
+    update_body = {
+      "name": "product name",
+      "description": "product description",
+      "sell_price": "20",
+      "cost_price": "15",
+      "stock": "20",
+      "sku": "123"
+    }
+    response = self.client.put(
+      f"/api/inventory/products/{product.pk}/", 
+      data=update_body, 
+    )
+    
+    self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED, response.data)
     
   def test_histories_was_registered_when_product_are_created(self):
     
