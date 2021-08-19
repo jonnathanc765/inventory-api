@@ -53,9 +53,8 @@ class UserViewSet(
     
     serializer = UserLoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    user, token = serializer.save()
+    _, token = serializer.save()
     data = {
-      'user': UserModelSerializer(user).data,
       'access_token': token
     }
     return Response(data, status=status.HTTP_200_OK)
