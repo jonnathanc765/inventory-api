@@ -11,17 +11,16 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 import environ
-import django_heroku
+
 from pathlib import Path
-
-
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Get envoriment 
 env = environ.Env()
+
+DEBUG = env.bool('DJANGO_DEBUG', False)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -30,13 +29,12 @@ env = environ.Env()
 SECRET_KEY = 'z-4eyn!+$pbh56p&8kf7i%$et31=_pv#-m&taz0h8ej9i_n5uc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
-
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,12 +46,14 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
   'multiviral.inventory',
-  'multiviral.api'
+  'multiviral.sales',
+  'multiviral.api',
 ]
 
 THIRD_PARTY_APPS = [
-  'django_extensions',
   'rest_framework',
+  'corsheaders',
+  'rest_framework.authtoken'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -61,6 +61,7 @@ INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -74,6 +75,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -92,11 +94,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': {}
 }
+DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 
 # Password validation
@@ -135,10 +135,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
-
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
@@ -147,5 +146,12 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 
-# For production
-django_heroku.settings(locals())
+CORS_ORIGIN_ALLOW_ALL = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+       'rest_framework.authentication.TokenAuthentication',
+    ),
+}

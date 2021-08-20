@@ -5,6 +5,10 @@ from decimal import Decimal
 # Factory boy 
 import factory
 
+# Factories 
+from multiviral.api.factories.users import UserFactory
+
+# Models 
 from multiviral.inventory.models import Product
 
 
@@ -17,6 +21,7 @@ class ProductFactory(factory.django.DjangoModelFactory):
   cost_price = Decimal(randint(1, 99999))
   sell_price = Decimal(randint(1, 99999))
   stock = randint(1, 999999)
+  owner = factory.SubFactory(UserFactory)
   
   class Meta:
     model = Product

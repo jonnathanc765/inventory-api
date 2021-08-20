@@ -18,7 +18,7 @@ class ProductModelSerializer(serializers.ModelSerializer):
     
   def create(self, validated_data):
     
-    product = Product.objects.create(**validated_data)
+    product = Product.objects.create(**validated_data, owner=self.context['view'].request.user)
     
     product.inventory_histories.create(
       stock=validated_data['stock'],

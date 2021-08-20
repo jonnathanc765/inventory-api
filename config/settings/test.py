@@ -19,10 +19,13 @@ CACHES = {
     }
 }
 
+DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
+
 # Passwords
 PASSWORD_HASHERS = ["django.contrib.auth.hashers.MD5PasswordHasher"]
 
 # Templates
+TEMPLATES[0]['APP_DIRS'] = False
 TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG  # NOQA
 TEMPLATES[0]["OPTIONS"]["loaders"] = [  # NOQA
     (
