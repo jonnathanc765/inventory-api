@@ -40,6 +40,8 @@ class AuthTest(CustomTestCase):
     self.assertTrue('first_name' in response.data)
     self.assertTrue('last_name' in response.data)
     self.assertTrue('email' in response.data)
+    self.assertTrue('id' in response.data)
+    self.assertEqual(response.data['id'], 1)
     
   def test_users_can_log_out(self):
     
