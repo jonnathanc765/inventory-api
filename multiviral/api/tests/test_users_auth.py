@@ -29,9 +29,6 @@ class AuthTest(CustomTestCase):
     
     self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
     self.assertTrue('access_token' in response.data)
-    self.assertTrue('user' in response.data)
-    self.assertTrue('username' in response.data['user'])
-    self.assertEqual('mandarina', response.data['user']['username'])
     
   def test_users_can_retrieve_his_informations(self):
     
