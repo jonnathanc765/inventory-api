@@ -31,7 +31,7 @@ SECRET_KEY = 'z-4eyn!+$pbh56p&8kf7i%$et31=_pv#-m&taz0h8ej9i_n5uc'
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.105:3000', '192.168.0.105']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -51,10 +51,9 @@ LOCAL_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-  'corsheaders',
   'rest_framework',
-  'rest_framework.authtoken',
-  'django_filters',
+  'corsheaders',
+  'rest_framework.authtoken'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -154,8 +153,5 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
        'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',
     ),
 }

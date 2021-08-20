@@ -9,7 +9,6 @@ from multiviral.inventory.models import Product
 
 class ProductModelSerializer(serializers.ModelSerializer):
   
-  description = serializers.CharField(max_length=1000, required=False)
   
   class Meta:
     
