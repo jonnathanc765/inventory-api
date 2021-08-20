@@ -15,8 +15,8 @@ services:
     volumes:
       - .:/app
     env_file:
-      - ./.envs/.django
-      - ./.envs/.mysql
+      - ./.envs/.local/.django
+      - ./.envs/.local/.mysql
     ports:
       - "8000:8000"
     command: /entrypoint
@@ -27,7 +27,7 @@ services:
       - "3666:3306"
     restart: always
     env_file:
-      - ./.envs/.mysql
+      - ./.envs/.local/.mysql
     volumes:
       - local_mysql_data:/var/lib/mysql
   

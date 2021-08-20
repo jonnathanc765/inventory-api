@@ -1,0 +1,5 @@
+MYSQL_HOST=mysql
+MYSQL_PORT=3306
+MYSQL_DATABASE=inventory
+MYSQL_USER=inventory_user
+MYSQL_PASSWORD=inventory**pass
