@@ -1,5 +1,6 @@
 
 # Utils 
+from multiviral.api.factories.users import UserFactory
 from multiviral.core.utils.tests import CustomTestCase
 
 # Django
@@ -24,6 +25,34 @@ class ProductModuleTest(CustomTestCase):
     
     self.assertEqual(response.status_code, status.HTTP_200_OK)
     self.assertEqual(len(response.data['results']), 10)
+    
+    
+  def test_users_can_be_filtered_by_user(self):
+    
+    self.authenticate()
+    
+    ProductFactory.create_batch(20, owner=self.user)
+    
+    user = UserFactory.create()
+    ProductFactory.create_batch(15, owner=user)
+    
+    response = self.client.get(f"/api/inventory/products/?user={self.user.pk}")
+    
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+    self.assertEqual(response.data['count'], 20)
+    self.assertEqual(len(response.data['results']), 10)
+    
+  def test_users_param_is_ignored_if_user_does_not_exists(self):
+    
+    user_one = UserFactory.create()
+    ProductFactory.create_batch(40, owner=user_one)
+    user_two = UserFactory.create()
+    ProductFactory.create_batch(25, owner=user_two)
+    
+    
+    response = self.client.get(f"/api/inventory/products/?user=23")
+    self.assertEqual(response.data['count'], 65)
+    
     
   def test_just_loged_in_users_can_create_products(self):
     

@@ -6,6 +6,9 @@ from rest_framework.permissions import IsAuthenticated
 # Models 
 from multiviral.inventory.models import Product
 
+# Django 
+from django.contrib.auth.models import User
+
 # Serializers 
 from multiviral.inventory.serializers import ProductModelSerializer
 
@@ -26,7 +29,9 @@ class ProductViewSet(ModelViewSet):
       if 'keyword' in self.request.query_params:
         where_conditions[f"{key}__icontains"] = self.request.query_params['keyword']
     if 'user' in self.request.query_params:
-      where_conditions['owner__pk'] = self.request.query_params['user']
+      user_id = self.request.query_params['user']
+      if User.objects.filter(pk=user_id).exists():
+        where_conditions['owner__pk'] = user_id
     return Product.objects.filter(**where_conditions)
 
   
